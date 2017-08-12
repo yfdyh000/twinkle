@@ -26,11 +26,6 @@ Twinkle.close = function twinkleclose() {
 		return span;
 	};
 
-	// 把section序号直接标在h2上以免在用某些编辑器时不正常
-	$('h2:has(.mw-headline)', '#bodyContent').each(function (index, current) {
-		current.setAttribute('data-section', index + 1);
-	});
-
 	var selector = ':has(.mw-headline a:only-of-type):not(:has(+ div.NavFrame))';
 	var titles = $('#bodyContent').find('h2' + selector + ':not(:has(+ p + h3)), h3' + selector); // really needs to work on
 
@@ -52,7 +47,7 @@ Twinkle.close = function twinkleclose() {
 		}
 		title = decodeURIComponent(title);
 		var pagenotexist = $(current).find('.mw-headline a').hasClass('new');
-		var section = current.getAttribute('data-section');
+		var section = /section=(\d+)/.exec($(current).find('.mw-editsection a:last').attr('href'))[1];
 		var node = current.getElementsByClassName('mw-headline')[0];
 		node.appendChild( document.createTextNode(' ') );
 		var tmpNode = delNode.cloneNode( true );
@@ -208,7 +203,7 @@ Twinkle.close.codes = {
 			action: 'keep'
 		}
 	}
-};
+}
 
 Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 	var Window = new Morebits.simpleWindow( 400, 150 );
@@ -255,7 +250,7 @@ Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 		title: title,
 		section: parseInt(section),
 		noop: noop
-	};
+	}
 	$(result).data("resultData", resultData);
 	// worker function to create the combo box entries
 	var createEntries = function( contents, container ) {
@@ -301,7 +296,7 @@ Twinkle.close.callback.change_code = function twinklecloseCallbackChangeCode(e) 
 		noop.checked = false;
 		noop.disabled = false;
 	}
-};
+}
 
 Twinkle.close.callback.evaluate = function twinklecloseCallbackEvaluate(e) {
 	var code = e.target.sub_group.value;
