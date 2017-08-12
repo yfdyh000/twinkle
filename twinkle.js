@@ -378,9 +378,10 @@ $.ajax({
 // For example, mw.loader.load(scriptpathbefore + "User:UncleDouggie/morebits-test.js" + scriptpathafter);
 
 Twinkle.load = function () {
-	// Don't activate on special pages other than "Contributions" so that they load faster, especially the watchlist.
+	// Don't activate on special pages other than "(Deleted)Contributions" so that they load faster, especially the watchlist.
 	var isSpecialPage = ( mw.config.get('wgNamespaceNumber') === -1 &&
 		mw.config.get('wgCanonicalSpecialPageName') !== "Contributions" &&
+		mw.config.get('wgCanonicalSpecialPageName') !== "DeletedContributions" &&
 		mw.config.get('wgCanonicalSpecialPageName') !== "Prefixindex" ),
 
 		// Also, Twinkle is incompatible with Internet Explorer versions 8 or lower, so don't load there either.
@@ -391,10 +392,15 @@ Twinkle.load = function () {
 		return;
 	}
 
+	// Prevent clickjacking
+	if ( window.top !== window.self ) {
+		return;
+	}
+
 	// Set custom Api-User-Agent header, for server-side logging purposes
 	Morebits.wiki.api.setApiUserAgent( 'Twinkle~zh/2.0 (' + mw.config.get( 'wgDBname' ) + ')' );
 
-	// Load the modules in the order that the tabs should appears
+	// Load the modules in the order that the tabs should appear
 	// User/user talk-related
 	Twinkle.arv();
 	Twinkle.warn();

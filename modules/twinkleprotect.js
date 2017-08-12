@@ -350,6 +350,11 @@ Twinkle.protect.callback.changeAction = function twinkleprotectCallbackChangeAct
 						value: 'sysop',
 						selected: true
 					});
+				createlevel.append({
+						type: 'option',
+						label: 'Sysop',
+						value: 'sysop'
+					});
 				field2.append({
 						type: 'select',
 						name: 'createexpiry',
@@ -602,6 +607,30 @@ Twinkle.protect.protectionPresetsInfo = {
 		edit: 'sysop',
 		move: 'sysop',
 		reason: '已封禁用户滥用其对话页'
+	},
+	'pp-30-500-vandalism': {
+		edit: 'extendedconfirmed',
+		move: 'extendedconfirmed',
+		reason: 'Persistent [[WP:Vandalism|vandalism]] from (auto)confirmed accounts',
+		template: 'pp-30-500'
+	},
+	'pp-30-500-disruptive': {
+		edit: 'extendedconfirmed',
+		move: 'extendedconfirmed',
+		reason: 'Persistent [[WP:Disruptive editing|disruptive editing]] from (auto)confirmed accounts',
+		template: 'pp-30-500'
+	},
+	'pp-30-500-blp': {
+		edit: 'extendedconfirmed',
+		move: 'extendedconfirmed',
+		reason: 'Persistent violations of the [[WP:BLP|biographies of living persons policy]] from (auto)confirmed accounts',
+		template: 'pp-30-500'
+	},
+	'pp-30-500-sock': {
+		edit: 'extendedconfirmed',
+		move: 'extendedconfirmed',
+		reason: 'Persistent [[WP:Sock puppetry|sock puppetry]]',
+		template: 'pp-30-500'
 	},
 	'pp-semi-vandalism': {
 		edit: 'autoconfirmed',

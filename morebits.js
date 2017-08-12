@@ -131,7 +131,7 @@ Morebits.sanitizeIPv6 = function ( address ) {
  *   optgroup  A group of "option"s.
  *              - Attributes: label, list
  *   field     A fieldset (aka group box).
- *              - Attributes: name, label
+ *              - Attributes: name, label, disabled
  *   checkbox  A checkbox. Must use "list" parameter.
  *              - Attributes: name, list, event
  *              - Attributes (within list): name, label, value, checked, disabled, event, subgroup
@@ -300,6 +300,9 @@ Morebits.quickForm.element.prototype.compute = function QuickFormElementCompute(
 		label.appendChild( document.createTextNode( data.label ) );
 		if( data.name ) {
 			node.setAttribute( 'name', data.name );
+		}
+		if( data.disabled ) {
+			node.setAttribute( 'disabled', 'disabled' );
 		}
 		break;
 	case 'checkbox':
@@ -991,8 +994,8 @@ if (!String.prototype.trim) {
 	};
 }
 
-// Helper functions to change case of a string
 Morebits.string = {
+	// Helper functions to change case of a string
 	toUpperCaseFirstChar: function(str) {
 		str = str.toString();
 		return str.substr( 0, 1 ).toUpperCase() + str.substr( 1 );
@@ -1049,6 +1052,12 @@ Morebits.string = {
 		unbinder.unbind("<no" + "wiki>", "</no" + "wiki>");
 		unbinder.content = unbinder.content.replace(/\|/g, "{{subst:!}}");
 		return unbinder.rebind();
+	},
+	// a replacement for String.prototype.replace() when the second parameter (the
+	// replacement string) is arbitrary, such as a username or freeform user input,
+	// and may contain dollar signs
+	safeReplace: function morebitsStringSafeReplace(string, pattern, replacement) {
+		return string.replace(pattern, replacement.replace(/\$/g, "$$$$"));
 	}
 };
 

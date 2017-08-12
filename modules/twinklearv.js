@@ -538,13 +538,13 @@ Twinkle.arv.callback.evaluate = function(e) {
 			}
 			if (comment !== "" ) {
 				comment = comment.replace(/\r?\n/g, "\n*:");  // indent newlines
-				reason += (types ? "。" : "") + comment;
+				reason += (types ? "。" : "* ") + comment;
 			}
 			reason = reason.trim();
 			if (reason.search(/[.?!;。？！；]$/) === -1) {
 				reason += "。";
 			}
-			reason += "\n* 发现人：~~~~";
+			reason += "\n* 发现人：~~~~\n* 处理：";
 
 			Morebits.simpleWindow.setButtonsEnabled( false );
 			Morebits.status.init( form );
@@ -617,8 +617,8 @@ Twinkle.arv.callback.evaluate = function(e) {
 				}
 				uaaPage.getStatusElement().status( '添加新报告…' );
 				uaaPage.setEditSummary( '报告[[Special:Contributions/' + uid + '|' + uid + ']]。'+ Twinkle.getPref('summaryAd') );
-				uaaPage.setPageText( text + "\n\n" + reason );
-				uaaPage.save();
+				uaaPage.setAppendText( "\n" + reason );
+				uaaPage.append();
 			} );
 			break;
 
@@ -750,7 +750,7 @@ Twinkle.arv.processSock = function( params ) {
 	}
 
 	// prepare the SPI report
-	var text = "\n\n=== User:" + params.uid + " ===\n" +
+	var text = "\n\n=== " + params.uid + " ===\n" +
 		"{{status2}}<!-- 请勿更改本行 -->\n" +
 		"{{checkuser|1=" + params.uid + "}}\n" +
 		params.sockpuppets.map( function(v) {

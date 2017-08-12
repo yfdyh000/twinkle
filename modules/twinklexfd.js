@@ -202,7 +202,7 @@ Twinkle.xfd.callback.change_afd_category = function twinklexfdCallbackChangeAfdC
 	} else if( e.target.value === 'fwdcsd' ) {
 		e.target.form.mergeinto.disabled = false;
 		e.target.form.mergeinto.previousElementSibling.innerHTML = '提交人：';
-		
+		e.target.form.xfdreason.value = decodeURIComponent($("#delete-reason").text()).replace(/\+/g, ' ');
 	} else {
 		e.target.form.mergeinto.disabled = true;
 	}
@@ -251,12 +251,14 @@ Twinkle.xfd.callbacks = {
 			}
 		},
 		taggingArticle: function(pageobj) {
+			var text = pageobj.getPageText();
+			var params = pageobj.getCallbackParameters();
+			var statelem = pageobj.getStatusElement();
+
 			if (!pageobj.exists()) {
 				statelem.error("页面不存在，可能已被删除");
 				return;
 			}
-			var text = pageobj.getPageText();
-			var params = pageobj.getCallbackParameters();
 			var tag = '{{vfd|' + Morebits.string.formatReasonText(params.reason);
 
 			switch ( params.xfdcat ) {

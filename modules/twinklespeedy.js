@@ -604,7 +604,7 @@ Twinkle.speedy.categoryList = [
 	}
 ];
 
-Twinkle.speedy.userList = [
+Twinkle.speedy.userAllList = [
 	{
 		label: 'O1: 用户请求删除自己的用户页或其子页面。',
 		value: 'o1',
@@ -1098,7 +1098,7 @@ Twinkle.speedy.callbacks = {
 				return;
 			}
 
-			var xfd = /(?:\{\{([rsaiftcm]fd|md1|proposed deletion)[^{}]*?\}\})/i.exec( text );
+			var xfd = /(?:\{\{([vrsaiftcm]fd|md1|proposed deletion|copyvio)[^{}]*?\}\})/i.exec( text );
 			if( xfd && !confirm( "删除相关模板{{" + xfd[1] + "}}已被置于页面中，您是否仍想添加一个快速删除模板？" ) ) {
 				return;
 			}
